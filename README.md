@@ -3,7 +3,7 @@
     <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="./assets/terminal-mobile-static.svg" />
     <source media="(prefers-reduced-motion: reduce)" srcset="./assets/terminal-static.svg" />
     <source media="(max-width: 600px)" srcset="./assets/terminal-mobile.svg" />
-    <img src="./assets/terminal.svg" width="100%" alt="Clover Jam terminal: three anime portraits in animated ASCII, programming and 3D modeling, games and full-stack web, currently learning Unreal Engine 5." />
+    <img src="./assets/terminal.svg" width="100%" alt="Clover Jam terminal with three rotating anime images, programming and 3D modeling, games and full-stack web, currently learning Unreal Engine 5." />
   </picture>
 </p>
 
