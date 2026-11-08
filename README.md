@@ -3,7 +3,7 @@
     <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="./assets/terminal-mobile-static.svg" />
     <source media="(prefers-reduced-motion: reduce)" srcset="./assets/terminal-static.svg" />
     <source media="(max-width: 600px)" srcset="./assets/terminal-mobile.svg" />
-    <img src="./assets/terminal.svg" width="100%" alt="Clover Jam terminal: anime ASCII portrait, programming and 3D modeling, games and full-stack web, currently learning Unreal Engine 5." />
+    <img src="./assets/terminal.svg" width="100%" alt="Clover Jam terminal: three anime portraits in animated ASCII, programming and 3D modeling, games and full-stack web, currently learning Unreal Engine 5." />
   </picture>
 </p>
 
@@ -12,7 +12,7 @@
     <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="./assets/slogan-mobile-static.svg" />
     <source media="(prefers-reduced-motion: reduce)" srcset="./assets/slogan-static.svg" />
     <source media="(max-width: 600px)" srcset="./assets/slogan-mobile.svg" />
-    <img src="./assets/slogan.svg" width="100%" alt="I do the most stupid shit that you surely haven't seen before." />
+    <img src="./assets/slogan.svg" width="100%" alt="Building weird shit you didn’t know you wanted." />
   </picture>
 </p>
 

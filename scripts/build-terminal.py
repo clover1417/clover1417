@@ -1,13 +1,15 @@
 from pathlib import Path
 from html import escape
-import math
 import sys
-from PIL import Image, ImageEnhance, ImageFilter
+from collections import deque
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'assets'
-SOURCE = Path(sys.argv[1])
-SLOGAN = "I do the most stupid shit that you surely haven't seen before."
+SOURCES = [Path(value) for value in sys.argv[1:]]
+if len(SOURCES) != 3:
+    raise SystemExit('Pass the three anime reference images in display order.')
+SLOGAN = 'Building weird shit you didn’t know you wanted.'
 COLORS = {'bg': '#070c10', 'panel': '#0d151a', 'border': '#263a41', 'text': '#ddede7', 'green': '#88f7ae', 'cyan': '#66d9ed', 'muted': '#91a9ad', 'pink': '#eab0d0'}
 TITLE = [
     '  _____ _      ______      ________ _____  ',
@@ -48,32 +50,51 @@ def chrome(width, label):
             + '<circle cx="26" cy="28" r="5" fill="#eab0d0"/><circle cx="45" cy="28" r="5" fill="#e5cf90"/><circle cx="64" cy="28" r="5" fill="#88f7ae"/>'
             + text(88,35,label,18,'muted'))
 
-original = Image.open(SOURCE).convert('RGB')
-image = ImageEnhance.Contrast(original).enhance(1.18).resize((88,49), Image.Resampling.LANCZOS)
-ramp = ' .,:;i1tfLCG08@'
-rows = []
-for y in range(image.height):
-    row = []
-    for x in range(image.width):
-        r,g,b = image.getpixel((x,y))
-        lum = (r*.2126 + g*.7152 + b*.0722)/255
-        outside = (b > r*1.2 and g > r*1.15) or ((x-43.5)/46)**2 + ((y-24)/27)**2 > 1.14
-        char = ' ' if outside else ramp[min(len(ramp)-1, int(lum*(len(ramp)-1)))]
-        if lum < .24:
-            color = '#47716b'
-        elif r > g*1.14 and r > b*1.20:
-            color = '#88f7ae'
-        elif r > b*1.28 and g > b*1.15:
-            color = '#e5cf90'
-        elif lum > .82:
-            color = '#d0f5e6'
-        else:
-            color = '#66d9bd'
-        row.append((char,color))
-    rows.append(row)
-ASSETS.joinpath('avatar.txt').write_text('\n'.join(''.join(char for char,_ in row) for row in rows)+'\n',encoding='utf8')
+def ascii_rows(source):
+    original = Image.open(source).convert('RGB')
+    scaled = ImageOps.contain(original, (176,168), Image.Resampling.LANCZOS).convert('RGBA')
+    canvas = Image.new('RGBA',(176,168),(0,0,0,0))
+    canvas.paste(scaled,((176-scaled.width)//2,(168-scaled.height)//2))
+    queue = deque([(x,y) for x in range(176) for y in [0,167]] + [(x,y) for y in range(168) for x in [0,175]])
+    seen = set()
+    while queue:
+        x,y = queue.popleft()
+        if (x,y) in seen or not (0 <= x < 176 and 0 <= y < 168):
+            continue
+        seen.add((x,y))
+        r,g,b,a = canvas.getpixel((x,y))
+        if a == 0 or (min(r,g,b) > 241 and max(r,g,b)-min(r,g,b) < 17):
+            canvas.putpixel((x,y),(0,0,0,0))
+            queue.extend([(x-1,y),(x+1,y),(x,y-1),(x,y+1)])
+    image = canvas.resize((88,49),Image.Resampling.LANCZOS)
+    ramp = ' .,:;i1tfLCG08@'
+    rows = []
+    for y in range(image.height):
+        row = []
+        for x in range(image.width):
+            r,g,b,a = image.getpixel((x,y))
+            lum = (r*.2126+g*.7152+b*.0722)/255
+            char = ' ' if a < 100 else ramp[min(len(ramp)-1,max(2,int(lum*(len(ramp)-1))))]
+            if lum < .25:
+                color = '#9686ae'
+            elif g > r*1.08 and b > r*1.08:
+                color = '#70dce6'
+            elif r > g*1.25 and r > b*1.12:
+                color = '#f299ba'
+            elif r > g*1.05 and b > g*1.03:
+                color = '#e4b5da' if lum > .65 else '#b096c5'
+            elif lum > .83:
+                color = '#f0deed'
+            else:
+                color = '#b3bada'
+            row.append((char,color))
+        rows.append(row)
+    return rows
 
-def portrait(x,y,width):
+PORTRAITS = [ascii_rows(source) for source in SOURCES]
+ASSETS.joinpath('avatar.txt').write_text('\n\n'.join(f'anime_{index+1:02d}\n'+'\n'.join(''.join(char for char,_ in row) for row in rows) for index,rows in enumerate(PORTRAITS))+'\n',encoding='utf8')
+
+def portrait_frame(rows,x,y,width):
     unit=width/88
     size=unit/.60
     line=unit*1.72
@@ -91,6 +112,9 @@ def portrait(x,y,width):
             start=end
         parts.append(f'<text y="{y+iy*line:.2f}" font-size="{size:.2f}" xml:space="preserve">{"".join(runs)}</text>')
     return '<g class="portrait">'+''.join(parts)+'</g>'
+
+def portrait(x,y,width):
+    return ''.join(f'<g class="frame frame-{index}" opacity="{1 if index == 0 else 0}">'+portrait_frame(rows,x,y,width)+'</g>' for index,rows in enumerate(PORTRAITS))
 
 def hero(mobile=False):
     width,height=(600,1000) if mobile else (1200,590)
@@ -122,13 +146,23 @@ def hero(mobile=False):
         parts.append(f'<rect x="{33+i*31}" y="{palette_y}" width="31" height="15" fill="{color}"/>')
     parts.append(text(33,prompt_y,'clover@github:~$',23,'green'))
     parts.append(f'<rect x="257" y="{prompt_y-21}" width="13" height="25" fill="{COLORS["green"]}" class="cursor"/>')
-    return svg(width,height,'Clover Jam | animated terminal and anime ASCII portrait',''.join(parts))
+    result = svg(width,height,'Clover Jam | animated terminal and three anime ASCII portraits',''.join(parts))
+    frame_css = '''
+.frame-0{animation:frame-one 24s linear infinite}
+.frame-1{animation:frame-two 24s linear infinite}
+.frame-2{animation:frame-three 24s linear infinite}
+@keyframes frame-one{0%,30%{opacity:1}32%,97%{opacity:0}100%{opacity:1}}
+@keyframes frame-two{0%,32%{opacity:0}34%,63%{opacity:1}65%,100%{opacity:0}}
+@keyframes frame-three{0%,65%{opacity:0}67%,97%{opacity:1}99%,100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.frame{animation:none!important}.frame-0{opacity:1!important}.frame-1,.frame-2{display:none}}
+'''
+    return result.replace('</style>',frame_css+'</style>').replace("made from the profile's anime avatar",'made from three supplied anime references')
 
 def slogan(mobile=False):
-    width,height=(600,285) if mobile else (1200,215)
+    width,height=(600,230) if mobile else (1200,215)
     parts=[text(30,47,'clover@github:~$ cat /etc/motd',23,'cyan')]
     parts.append(f'<path d="M30 68H{width-30}" stroke="{COLORS["border"]}"/>')
-    lines=['I do the most stupid shit',"that you surely haven't",'seen before.'] if mobile else ['I do the most stupid shit',"that you surely haven't seen before."]
+    lines=['Building weird shit','you didn’t know you wanted.']
     for i,line in enumerate(lines):
         line_svg = text(31,116+i*44,line,32 if mobile else 34,'green' if i==0 else 'text',f'class="{"type" if i==0 else "type-later"}" font-weight="700"')
         if i == len(lines)-1:
@@ -139,5 +173,7 @@ def slogan(mobile=False):
 for name,content in [('terminal.svg',hero()),('terminal-mobile.svg',hero(True)),('slogan.svg',slogan()),('slogan-mobile.svg',slogan(True))]:
     ASSETS.joinpath(name).write_text(content,encoding='utf8')
     static = content.replace('</style>', '.type,.type-later,.portrait,.cursor,.scan{animation:none!important;clip-path:none!important}.scan{display:none}</style>')
+    if name.startswith('terminal'):
+        static = static.replace('</style>','.frame{animation:none!important}.frame-0{opacity:1!important}.frame-1,.frame-2{display:none}</style>')
     ASSETS.joinpath(name.replace('.svg','-static.svg')).write_text(static,encoding='utf8')
     print(f'{name}: {len(content):,} characters')

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="285" viewBox="0 0 600 285" role="img" aria-labelledby="title desc">
-<title id="title">I do the most stupid shit that you surely haven&#x27;t seen before.</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="230" viewBox="0 0 600 230" role="img" aria-labelledby="title desc">
+<title id="title">Building weird shit you didn’t know you wanted.</title>
 <desc id="desc">An animated hacker terminal for Clover Jam, with an ASCII portrait made from the profile's anime avatar. Animation stops when reduced motion is enabled.</desc>
 <style>
 text{font-family:Consolas,'Liberation Mono',monospace;font-variant-ligatures:none}
@@ -14,6 +14,6 @@ text{font-family:Consolas,'Liberation Mono',monospace;font-variant-ligatures:non
 @keyframes scan{0%,65%{transform:translateY(0);opacity:0}66%{opacity:.25}91%{transform:translateY(400px);opacity:.25}92%,100%{transform:translateY(400px);opacity:0}}
 @media(prefers-reduced-motion:reduce){.type,.type-later,.portrait,.cursor,.scan{animation:none!important;clip-path:none!important}.scan{display:none}}
 </style>
-<rect x="1" y="1" width="598" height="283" rx="12" fill="#070c10" stroke="#263a41" stroke-width="2"/>
-<text x="30" y="47" font-size="23" fill="#66d9ed" >clover@github:~$ cat /etc/motd</text><path d="M30 68H570" stroke="#263a41"/><text x="31" y="116" font-size="32" fill="#88f7ae" class="type" font-weight="700">I do the most stupid shit</text><text x="31" y="160" font-size="32" fill="#ddede7" class="type-later" font-weight="700">that you surely haven&#x27;t</text><text x="31" y="204" font-size="32" fill="#ddede7" class="type-later" font-weight="700">seen before.<tspan class="cursor" fill="#88f7ae"> █</tspan></text>
+<rect x="1" y="1" width="598" height="228" rx="12" fill="#070c10" stroke="#263a41" stroke-width="2"/>
+<text x="30" y="47" font-size="23" fill="#66d9ed" >clover@github:~$ cat /etc/motd</text><path d="M30 68H570" stroke="#263a41"/><text x="31" y="116" font-size="32" fill="#88f7ae" class="type" font-weight="700">Building weird shit</text><text x="31" y="160" font-size="32" fill="#ddede7" class="type-later" font-weight="700">you didn’t know you wanted.<tspan class="cursor" fill="#88f7ae"> █</tspan></text>
 </svg>
