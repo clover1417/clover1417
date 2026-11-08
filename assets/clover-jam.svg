@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
+  <title id="title">Clover Jam</title>
+  <desc id="desc">Code and modeling. A botanical green banner with a four-leaf clover, a peach star and a small wireframe cube.</desc>
+  <defs>
+    <path id="leaf" d="M0 0C-13-31-73-45-76-90C-79-132-27-153 0-115C27-153 79-132 76-90C73-45 13-31 0 0Z"/>
+  </defs>
+  <rect width="1200" height="390" rx="24" fill="#203F36"/>
+  <path d="M800 390C916 288 960 102 1200 67V390Z" fill="#294B40"/>
+  <path d="M954 390C1064 284 1115 205 1200 190V390Z" fill="#345848"/>
+  <text x="62" y="81" font-family="Consolas,monospace" font-size="24" fill="#C1D99C">hello, world.</text>
+  <text x="57" y="182" font-family="Trebuchet MS,Arial,sans-serif" font-weight="700" font-size="86" letter-spacing="-4" fill="#FAF1DC">Clover Jam</text>
+  <text x="63" y="236" font-family="Consolas,monospace" font-size="28" fill="#E4EBCF">code × modeling</text>
+  <path d="M64 284H480" stroke="#64816C" stroke-width="2"/>
+  <text x="63" y="333" font-family="Consolas,monospace" font-size="23" fill="#C1D99C">@clover1417</text>
+  <g transform="translate(914 185) rotate(16)">
+    <path d="M0 0C23 55 24 104-10 150" fill="none" stroke="#B5CD83" stroke-width="13" stroke-linecap="round"/>
+    <use href="#leaf" fill="#D6E8A7"/>
+    <use href="#leaf" transform="rotate(90)" fill="#B5CD83"/>
+    <use href="#leaf" transform="rotate(180)" fill="#8DAF70"/>
+    <use href="#leaf" transform="rotate(270)" fill="#AAC881"/>
+    <path d="M0-12V-82M12 0H82M0 12V82M-12 0H-82" stroke="#203F36" stroke-opacity=".17" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <path d="M1112 47L1122 73L1148 83L1122 93L1112 119L1102 93L1076 83L1102 73Z" fill="#F3B49D"/>
+  <g transform="translate(660 284) rotate(-12)" fill="none" stroke="#ADC5AC" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M0-29L26-14V16L0 31L-26 16V-14ZM-26-14L0 1L26-14M0 1V31"/>
+  </g>
+  <circle cx="739" cy="78" r="6" fill="#F3B49D"/>
+</svg>

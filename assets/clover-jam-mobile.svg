@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360" role="img" aria-labelledby="title">
+  <title id="title">Clover Jam, code and modeling</title>
+  <defs><path id="leaf" d="M0 0C-13-31-73-45-76-90C-79-132-27-153 0-115C27-153 79-132 76-90C73-45 13-31 0 0Z"/></defs>
+  <rect width="600" height="360" rx="24" fill="#203F36"/>
+  <path d="M355 360C410 252 455 186 600 125V360Z" fill="#294B40"/>
+  <g transform="translate(466 134) rotate(16) scale(.66)">
+    <path d="M0 0C23 55 24 104-10 150" fill="none" stroke="#B5CD83" stroke-width="13" stroke-linecap="round"/>
+    <use href="#leaf" fill="#D6E8A7"/><use href="#leaf" transform="rotate(90)" fill="#B5CD83"/><use href="#leaf" transform="rotate(180)" fill="#8DAF70"/><use href="#leaf" transform="rotate(270)" fill="#AAC881"/>
+  </g>
+  <path d="M325 53L332 72L351 79L332 86L325 105L318 86L299 79L318 72Z" fill="#F3B49D"/>
+  <text x="33" y="91" font-family="Consolas,monospace" font-size="30" fill="#C1D99C">hello, world.</text>
+  <text x="30" y="246" font-family="Trebuchet MS,Arial,sans-serif" font-weight="700" font-size="76" letter-spacing="-3" fill="#FAF1DC">Clover Jam</text>
+  <text x="35" y="307" font-family="Consolas,monospace" font-size="31" fill="#E4EBCF">code × modeling</text>
+</svg>
